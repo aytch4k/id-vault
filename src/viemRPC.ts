@@ -95,7 +95,7 @@ const sendTransaction = async (provider: IProvider): Promise<any> => {
     const receipt = await publicClient.waitForTransactionReceipt({ hash });
 
 
-    return JSON.stringify(receipt, (key, value) =>
+    return JSON.stringify(receipt, (_, value) =>
       typeof value === 'bigint'
         ? value.toString()
         : value // return everything else unchanged

@@ -10,18 +10,24 @@ services:
       - "5173:5173"
     volumes:
       - ./:/app
-      - /app/node_modules
+      - ./package.json:/app/package.json
+      - node_modules_volume:/app/node_modules
     environment:
       - NODE_ENV=development
       - VITE_WEB3AUTH_CLIENT_ID=${VITE_WEB3AUTH_CLIENT_ID}
       - VITE_WEB3AUTH_CLIENT_SECRET=${VITE_WEB3AUTH_CLIENT_SECRET}
       - VITE_WALLETCONNECT_PROJECT_ID=${VITE_WALLETCONNECT_PROJECT_ID}
       - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - AMD_VISIBLE_DEVICES=all
+      - HSA_OVERRIDE_GFX_VERSION=10.3.0
     deploy:
       resources:
         limits:
           cpus: '30.0'  # Allocate 30 of the 32 cores
-          memory: 64G  # Allocate 120GB of the 128GB RAM
+          memory: 64G  # Allocate 64GB RAM
     runtime: nvidia     # Enable NVIDIA GPU support
     restart: unless-stopped
+
+volumes:
+  node_modules_volume:

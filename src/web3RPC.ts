@@ -92,7 +92,7 @@ const sendTransaction = async (provider: IProvider): Promise<any> => {
     // Submit transaction to the blockchain and wait for it to be mined
     const receipt = await web3.eth.sendTransaction(transaction);
 
-    return JSON.stringify(receipt, (key, value) =>
+    return JSON.stringify(receipt, (_, value) =>
       typeof value === 'bigint'
         ? value.toString()
         : value // return everything else unchanged

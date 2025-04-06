@@ -4,7 +4,20 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'polyfill-node-globals',
+      apply: 'build',
+      configResolved(config) {
+        // Add Buffer polyfill
+        config.define = {
+          ...config.define,
+          'Buffer': ['buffer', 'Buffer'],
+        };
+      }
+    }
+  ],
   resolve: {
     alias: {
       process: "process",
@@ -17,6 +30,7 @@ export default defineConfig({
   define: {
     'process.env': {},
     global: 'globalThis',
+    'Buffer': ['buffer', 'Buffer'],
   },
   build: {
     target: "esnext",

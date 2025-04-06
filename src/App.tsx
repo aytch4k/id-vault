@@ -3,9 +3,9 @@
 import "./App.css";
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import { ADAPTER_STATUS } from "@web3auth/base";
-import RPC from "./ethersRPC";
-// import RPC from "./viemRPC";
-// import RPC from "./web3RPC";
+import EthersRPC from "./ethersRPC";
+import ViemRPC from "./viemRPC";
+import Web3RPC from "./web3RPC";
 
 function App() {
   const { status, connect, userInfo, provider, logout: logoutWeb3Auth } = useWeb3Auth();
@@ -25,7 +25,7 @@ function App() {
       uiConsole("provider not initialized yet");
       return;
     }
-    const address = await RPC.getAccounts(provider);
+    const address = await EthersRPC.getAccounts(provider);
     uiConsole(address);
   };
 
@@ -34,7 +34,7 @@ function App() {
       uiConsole("provider not initialized yet");
       return;
     }
-    const balance = await RPC.getBalance(provider);
+    const balance = await ViemRPC.getBalance(provider);
     uiConsole(balance);
   };
 
@@ -43,7 +43,7 @@ function App() {
       uiConsole("provider not initialized yet");
       return;
     }
-    const signedMessage = await RPC.signMessage(provider);
+    const signedMessage = await Web3RPC.signMessage(provider);
     uiConsole(signedMessage);
   };
 
@@ -53,7 +53,7 @@ function App() {
       return;
     }
     uiConsole("Sending Transaction...");
-    const transactionReceipt = await RPC.sendTransaction(provider);
+    const transactionReceipt = await EthersRPC.sendTransaction(provider);
     uiConsole(transactionReceipt);
   };
 
@@ -116,6 +116,9 @@ function App() {
         </a>
         & ID Vault - Non-custodial Wallet
       </h1>
+      <h2 style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
+        HELLO WORLD - APP IS LOADING SUCCESSFULLY!
+      </h2>
 
       <div className="grid">{status === ADAPTER_STATUS.CONNECTED ? loggedInView : unloggedInView}</div>
       <div id="console" style={{ whiteSpace: "pre-line" }}>
