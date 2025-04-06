@@ -15,6 +15,7 @@ A non-custodial wallet for a custom blockchain that is Cosmos SDK + IBC based an
 ## Technologies Used
 
 - React with TypeScript
+- Vite for fast development and building
 - Web3Auth for authentication and wallet functionality
 - WalletConnect for connecting to external wallets
 - Ethers.js for Ethereum interactions
@@ -22,8 +23,9 @@ A non-custodial wallet for a custom blockchain that is Cosmos SDK + IBC based an
 
 ## Prerequisites
 
-- Node.js (v14 or later)
+- Node.js (v18 or later)
 - npm or yarn
+- Docker and Docker Compose (for containerized setup)
 
 ## Installation
 
@@ -42,9 +44,9 @@ npm install
 
 3. Create a `.env` file in the root directory with the following variables:
 ```
-REACT_APP_WEB3AUTH_CLIENT_ID=your_web3auth_client_id
-REACT_APP_WEB3AUTH_CLIENT_SECRET=your_web3auth_client_secret
-REACT_APP_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
+VITE_WEB3AUTH_CLIENT_ID=your_web3auth_client_id
+VITE_WEB3AUTH_CLIENT_SECRET=your_web3auth_client_secret
+VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
 ```
 
 ### Option 2: Docker Installation (Recommended)
@@ -57,9 +59,9 @@ cd id-vault
 
 2. Create a `.env` file in the root directory with the following variables:
 ```
-REACT_APP_WEB3AUTH_CLIENT_ID=your_web3auth_client_id
-REACT_APP_WEB3AUTH_CLIENT_SECRET=your_web3auth_client_secret
-REACT_APP_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
+VITE_WEB3AUTH_CLIENT_ID=your_web3auth_client_id
+VITE_WEB3AUTH_CLIENT_SECRET=your_web3auth_client_secret
+VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
 ```
 
 3. Run using the provided scripts:
@@ -84,7 +86,7 @@ docker-compose up --build
 
 If using standard installation:
 ```bash
-npm start
+npm run dev
 ```
 
 If using Docker:
@@ -92,7 +94,7 @@ If using Docker:
 docker-compose up
 ```
 
-The application will be available at http://localhost:3000
+The application will be available at http://localhost:5173
 
 ## Usage
 
@@ -103,9 +105,10 @@ The application will be available at http://localhost:3000
 
 ## Project Structure
 
-- `src/contexts/`: Contains context providers for Web3Auth and WalletConnect
-- `src/components/`: React components for the wallet interface
-- `public/`: Static assets and HTML template
+- `src/`: Source code for the application
+  - `components/`: React components for the wallet interface
+  - `contexts/`: Context providers for Web3Auth and WalletConnect
+- `public/`: Static assets
 
 ## Security Considerations
 

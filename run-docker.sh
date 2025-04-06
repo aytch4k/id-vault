@@ -18,9 +18,9 @@ fi
 if [ ! -f .env ]; then
     echo "Error: .env file not found."
     echo "Please create a .env file with the following variables:"
-    echo "REACT_APP_WEB3AUTH_CLIENT_ID=your_web3auth_client_id"
-    echo "REACT_APP_WEB3AUTH_CLIENT_SECRET=your_web3auth_client_secret"
-    echo "REACT_APP_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id"
+    echo "VITE_WEB3AUTH_CLIENT_ID=your_web3auth_client_id"
+    echo "VITE_WEB3AUTH_CLIENT_SECRET=your_web3auth_client_secret"
+    echo "VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id"
     exit 1
 fi
 
