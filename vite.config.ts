@@ -1,14 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      process: "process/browser",
+      process: "process",
       stream: "stream-browserify",
       zlib: "browserify-zlib",
       util: "util",
@@ -54,7 +53,7 @@ export default defineConfig({
     format: 'es',
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'ethers', 'buffer', 'process/browser'],
+    include: ['react', 'react-dom', 'ethers', 'buffer', 'process'],
     esbuildOptions: {
       target: 'esnext',
     },
