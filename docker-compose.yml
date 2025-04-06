@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  id-vault:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: id-vault
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_WEB3AUTH_CLIENT_ID=${REACT_APP_WEB3AUTH_CLIENT_ID}
+      - VITE_WEB3AUTH_CLIENT_SECRET=${REACT_APP_WEB3AUTH_CLIENT_SECRET}
+      - VITE_WALLETCONNECT_PROJECT_ID=${REACT_APP_WALLETCONNECT_PROJECT_ID}
+    restart: unless-stopped
