@@ -1,14 +1,11 @@
-import { ReportHandler } from 'web-vitals';
+// This is a placeholder for web vitals reporting
+// In a Vite project, you can use a different approach for performance monitoring
 
-const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+const reportWebVitals = (onPerfEntry?: any) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-      getCLS(onPerfEntry);
-      getFID(onPerfEntry);
-      getFCP(onPerfEntry);
-      getLCP(onPerfEntry);
-      getTTFB(onPerfEntry);
-    });
+    // Import web-vitals dynamically if needed
+    // For now, we'll just log that this function was called
+    console.log('Web Vitals reporting is disabled in this build');
   }
 };
 

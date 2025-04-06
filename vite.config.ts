@@ -1,23 +1,28 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      crypto: "empty-module",
+      process: "process/browser",
+      stream: "stream-browserify",
+      zlib: "browserify-zlib",
+      util: "util",
+      buffer: "buffer",
     },
   },
   define: {
-    global: "globalThis",
+    'process.env': {},
+    global: 'globalThis',
   },
   build: {
     target: "esnext",
     minify: "terser",
     terserOptions: {
-      parallel: true, // Use multi-core CPU
       format: {
         comments: false,
       },
@@ -49,7 +54,7 @@ export default defineConfig({
     format: 'es',
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'ethers'],
+    include: ['react', 'react-dom', 'ethers', 'buffer', 'process/browser'],
     esbuildOptions: {
       target: 'esnext',
     },

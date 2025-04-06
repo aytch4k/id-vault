@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Web3Auth } from '@web3auth/modal';
-import { CHAIN_NAMESPACES, IProvider } from '@web3auth/base';
-import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
+import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from '@web3auth/base';
+import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider';
 import { ethers } from 'ethers';
 
 // Define the context type
@@ -52,32 +52,34 @@ export const Web3AuthProvider: React.FC<{ children: ReactNode }> = ({ children }
         setIsLoading(true);
         
         // Get client ID from environment variable
-        const clientId = process.env.REACT_APP_WEB3AUTH_CLIENT_ID || '';
+        const clientId = import.meta.env.VITE_WEB3AUTH_CLIENT_ID || '';
+        
+        // Create chain config
+        const chainId = "0x1"; // Ethereum mainnet
+        const chainConfig = {
+          chainNamespace: CHAIN_NAMESPACES.EIP155,
+          chainId,
+          rpcTarget: 'https://rpc.ankr.com/eth',
+        };
+
+        // Create private key provider
+        const privateKeyProvider = new EthereumPrivateKeyProvider({
+          config: { chainConfig }
+        });
         
         // Create Web3Auth instance
         const web3authInstance = new Web3Auth({
           clientId,
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: '0x1', // Ethereum mainnet
-            rpcTarget: 'https://mainnet.infura.io/v3/your-infura-id', // Replace with your RPC endpoint
-          },
+          web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+          chainConfig,
+          privateKeyProvider,
           uiConfig: {
-            theme: 'dark',
+            theme: {
+              primary: "#00a8ff",
+            },
             loginMethodsOrder: ['google', 'facebook', 'twitter', 'email_passwordless'],
-            appLogo: 'https://example.com/logo.png', // Replace with your app logo
           },
         });
-
-        // Add OpenLogin adapter
-        const openloginAdapter = new OpenloginAdapter({
-          adapterSettings: {
-            network: 'mainnet',
-            uxMode: 'popup',
-            clientId,
-          },
-        });
-        web3authInstance.configureAdapter(openloginAdapter);
 
         // Initialize
         await web3authInstance.initModal();

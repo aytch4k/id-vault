@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Web3AuthProvider } from "@web3auth/modal-react-hooks";
 import web3AuthContextConfig from "./web3authContext";
+import "./index.css";
 
 import App from "./App";
-import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

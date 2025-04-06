@@ -3,9 +3,9 @@
 import "./App.css";
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import { ADAPTER_STATUS } from "@web3auth/base";
-import RPC from "../ethersRPC";
-// import RPC from "../viemRPC";
-// import RPC from "../web3RPC";
+import RPC from "./ethersRPC";
+// import RPC from "./viemRPC";
+// import RPC from "./web3RPC";
 
 function App() {
   const { status, connect, userInfo, provider, logout: logoutWeb3Auth } = useWeb3Auth();

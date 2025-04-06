@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import SignClient from '@walletconnect/sign-client';
-import { Web3Modal } from '@walletconnect/modal';
+import { WalletConnectModal } from '@walletconnect/modal';
 import { SessionTypes } from '@walletconnect/types';
 import { getSdkError } from '@walletconnect/utils';
 
@@ -37,15 +37,18 @@ export const WalletConnectProvider: React.FC<{ children: ReactNode }> = ({ child
   const [session, setSession] = useState<SessionTypes.Struct | null>(null);
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [web3Modal, setWeb3Modal] = useState<Web3Modal | null>(null);
+  const [walletConnectModal, setWalletConnectModal] = useState<WalletConnectModal | null>(null);
 
   // Initialize WalletConnect
   useEffect(() => {
     const init = async () => {
       try {
+        // Get project ID from environment variable
+        const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '';
+        
         // Create SignClient
         const client = await SignClient.init({
-          projectId: process.env.REACT_APP_WALLETCONNECT_PROJECT_ID || '', // WalletConnect project ID
+          projectId,
           metadata: {
             name: 'ID Vault',
             description: 'Non-custodial wallet for Cosmos SDK + IBC based and EVM compatible blockchain',
@@ -54,16 +57,14 @@ export const WalletConnectProvider: React.FC<{ children: ReactNode }> = ({ child
           },
         });
 
-        // Create Web3Modal
-        const modal = new Web3Modal({
-          projectId: process.env.REACT_APP_WALLETCONNECT_PROJECT_ID || '', // WalletConnect project ID
+        // Create WalletConnect Modal
+        const modal = new WalletConnectModal({
+          projectId,
           themeMode: 'dark',
-          themeColor: 'green',
-          walletConnectVersion: 2,
         });
 
         setSignClient(client);
-        setWeb3Modal(modal);
+        setWalletConnectModal(modal);
 
         // Subscribe to session events
         client.on('session_delete', () => {
@@ -88,7 +89,7 @@ export const WalletConnectProvider: React.FC<{ children: ReactNode }> = ({ child
 
   // Connect function
   const connect = async () => {
-    if (!signClient || !web3Modal) {
+    if (!signClient || !walletConnectModal) {
       console.error('WalletConnect not initialized');
       return;
     }
@@ -126,11 +127,11 @@ export const WalletConnectProvider: React.FC<{ children: ReactNode }> = ({ child
 
       // Open modal if URI is available
       if (uri) {
-        web3Modal.openModal({ uri });
+        walletConnectModal.openModal({ uri });
         const session = await approval();
         setSession(session);
         setIsConnected(true);
-        web3Modal.closeModal();
+        walletConnectModal.closeModal();
       }
     } catch (error) {
       console.error('Error connecting with WalletConnect:', error);
