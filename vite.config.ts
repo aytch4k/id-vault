@@ -1,26 +1,25 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+
+// Access to process.env
+declare const process: {
+  env: Record<string, string>;
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    {
-      name: 'polyfill-node-globals',
-      apply: 'build',
-      configResolved(config) {
-        // Add Buffer polyfill
-        config.define = {
-          ...config.define,
-          'Buffer': ['buffer', 'Buffer'],
-        };
-      }
-    }
+    nodePolyfills({
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
+    }),
   ],
   resolve: {
     alias: {
-      process: "process",
+      process: "process/browser",
       stream: "stream-browserify",
       zlib: "browserify-zlib",
       util: "util",
@@ -29,8 +28,8 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
-    global: 'globalThis',
-    'Buffer': ['buffer', 'Buffer'],
+    'import.meta.env': JSON.stringify(process.env),
+    'global': 'window',
   },
   build: {
     target: "esnext",
@@ -67,9 +66,19 @@ export default defineConfig({
     format: 'es',
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'ethers', 'buffer', 'process'],
+    include: [
+      'react', 
+      'react-dom', 
+      '@web3auth/modal-react-hooks',
+      '@web3auth/base',
+      'buffer',
+      'process'
+    ],
     esbuildOptions: {
       target: 'esnext',
+      define: {
+        global: 'globalThis',
+      },
     },
   },
 });

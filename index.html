@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Polyfills for Node.js APIs in browser -->
     <script>
-      window.process = { env: {} };
+      // Define global first
+      window.global = window;
+    </script>
+    <!-- Process polyfill -->
+    <script src="https://cdn.jsdelivr.net/npm/process@0.11.10/browser.min.js"></script>
+    <!-- Buffer polyfill -->
+    <script src="https://cdn.jsdelivr.net/npm/buffer@6.0.3/index.min.js"></script>
+    <script>
+      // Make Buffer available globally
+      window.Buffer = buffer.Buffer;
     </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />

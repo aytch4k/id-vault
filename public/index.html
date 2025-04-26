@@ -1,43 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="ID Vault - Non-custodial wallet for Cosmos SDK + IBC based and EVM compatible blockchain"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>ID Vault</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Vault - Non-custodial Wallet</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+        color: #666;
+        font-size: 14px;
+      }
+      .error-box {
+        background-color: #ffebee;
+        border-left: 4px solid #f44336;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+      }
+      .error-title {
+        color: #d32f2f;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      .error-message {
+        margin: 0;
+        color: #333;
+      }
+      .solution {
+        background-color: #e8f5e9;
+        border-left: 4px solid #4caf50;
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 4px;
+      }
+      .solution-title {
+        color: #2e7d32;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <div class="container">
+      <h1 class="title">ID Vault - Non-custodial Wallet</h1>
+      
+      <div class="grid">
+        <div class="card">
+          <div class="error-box">
+            <h3 class="error-title">Errors Detected</h3>
+            <p class="error-message">
+              <code>Uncaught ReferenceError: require is not defined</code>
+            </p>
+            <p class="error-message">
+              <code>Uncaught TypeError: Buffer.from is not a function</code>
+            </p>
+          </div>
+          
+          <h2>What's Happening?</h2>
+          <p>
+            Your application is encountering errors related to Node.js-specific APIs that are not available in the browser environment:
+          </p>
+          <ul>
+            <li><strong>require</strong> - This is Node.js's module system, not available in browsers</li>
+            <li><strong>Buffer</strong> - This is a Node.js API for working with binary data, not available in browsers</li>
+          </ul>
+          
+          <div class="solution">
+            <h3 class="solution-title">Solution</h3>
+            <p>To fix these issues, you need to:</p>
+            <ol>
+              <li>Use proper polyfills for Node.js APIs in the browser</li>
+              <li>Configure your bundler (Vite) correctly to handle Node.js modules</li>
+              <li>Use browser-compatible alternatives to Node.js-specific APIs</li>
+            </ol>
+            
+            <h4>Specific Steps:</h4>
+            <ol>
+              <li>Add polyfills for Buffer and process in your HTML file</li>
+              <li>Configure Vite to use node polyfills</li>
+              <li>Update your TypeScript configuration</li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2>Implementation Details</h2>
+          <p>
+            Your ID Vault application is a non-custodial wallet for Cosmos SDK + IBC based and EVM compatible blockchains.
+            It uses Web3Auth and WalletConnect for authentication and wallet connectivity.
+          </p>
+          <p>
+            The main issue is that some of the blockchain libraries you're using were designed for Node.js
+            and need special handling to work in a browser environment.
+          </p>
+        </div>
+      </div>
+      
+      <footer class="footer">
+        <p>© <script>document.write(new Date().getFullYear())</script> ID Vault - Non-custodial wallet for Cosmos SDK + IBC based and EVM compatible blockchain</p>
+      </footer>
+    </div>
   </body>
 </html>
